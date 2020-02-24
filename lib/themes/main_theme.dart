@@ -1,3 +1,8 @@
 import 'package:flutter/material.dart';
 
-final mainTheme = ThemeData();
+ThemeData mainTheme = ThemeData(
+  floatingActionButtonTheme: FloatingActionButtonThemeData(
+    foregroundColor: Colors.white,
+    backgroundColor: Colors.black,
+  ),
+);

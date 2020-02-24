@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:pictile/navigation/my_page_route.dart';
 import 'package:pictile/navigation/routes.dart';
 import 'package:pictile/ui/home/home_page.dart';
+import 'package:pictile/ui/manage/add/add_set_page.dart';
+import 'package:pictile/ui/manage/menu/manage_menu_page.dart';
+import 'package:pictile/ui/show/show_page.dart';
 import 'package:pictile/utils/logger.dart';
 
 import 'stack.dart' as s;
@@ -20,10 +24,16 @@ class Router with NavigatorObserver {
 
     switch (settings.name) {
       case homeRoute:
-        return MaterialPageRoute(builder: (_) => HomePage());
+        return MyPageRoute(builder: (_) => HomePage());
 
-//      case accountRoute:
-//        return SearchPageRoute(builder: (_) => AccountPage());
+      case manageMenuRoute:
+        return MyPageRoute(builder: (_) => ManageMenuPage());
+
+      case showMenuRoute:
+        return MyPageRoute(builder: (_) => ShowPage());
+
+      case manageAddRoute:
+        return MyPageRoute(builder: (_) => AddSetPage());
 
       default:
         return _errorRoute('No path specified for: ${settings.name}.');
@@ -42,7 +52,7 @@ class Router with NavigatorObserver {
 
   @override
   void didPop(Route route, Route previousRoute) {
-    if (route is MaterialPageRoute) {
+    if (route is MaterialPageRoute || route is MyPageRoute) {
       _routes.pop();
       Log.d(_TAG, 'popped page');
     } else {

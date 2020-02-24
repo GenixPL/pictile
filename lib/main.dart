@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:pictile/navigation/routes.dart';
 import 'package:pictile/themes/main_theme.dart';
 
@@ -11,9 +12,16 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle(
+        statusBarColor: Colors.white,
+        statusBarBrightness: Brightness.dark,
+      ),
+    );
+
     return MaterialApp(
       theme: mainTheme,
-      initialRoute: homeRoute,
+      initialRoute: manageMenuRoute, //TODO
       onGenerateRoute: router.generateRoute,
     );
   }
