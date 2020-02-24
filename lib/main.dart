@@ -1,15 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pictile/navigation/routes.dart';
+import 'package:pictile/services/db.dart';
 import 'package:pictile/themes/main_theme.dart';
 
 import 'navigation/router.dart';
 
-void main() => runApp(MyApp());
+void main() async {
+  runApp(MyApp());
+
+  await db.init();
+}
+
+final router = Router();
+final db = Db();
 
 class MyApp extends StatelessWidget {
-  final router = Router();
-
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
@@ -21,7 +27,7 @@ class MyApp extends StatelessWidget {
 
     return MaterialApp(
       theme: mainTheme,
-      initialRoute: manageAddRoute, //TODO
+      initialRoute: homeRoute,
       onGenerateRoute: router.generateRoute,
     );
   }
