@@ -6,12 +6,12 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:pictile/ui/common/app_text_style.dart';
 import 'package:pictile/ui/common/basic_page.dart';
 
-class AddSetPage extends StatefulWidget {
+class AddPairPage extends StatefulWidget {
   @override
-  _AddSetPageState createState() => _AddSetPageState();
+  _AddPairPageState createState() => _AddPairPageState();
 }
 
-class _AddSetPageState extends State<AddSetPage> {
+class _AddPairPageState extends State<AddPairPage> {
   File _img;
   final _formKey = GlobalKey<FormState>();
 
@@ -21,7 +21,7 @@ class _AddSetPageState extends State<AddSetPage> {
       children: <Widget>[
         Padding(
           padding: const EdgeInsets.all(16),
-          child: Text('CREATE NEW SET', style: blackTextStyle),
+          child: Text('CREATE NEW PAIR', style: blackTextStyle),
         ),
         Expanded(
           child: Column(
@@ -164,7 +164,7 @@ class _AddSetPageState extends State<AddSetPage> {
       return;
     }
 
-    
+
   }
 
   String _validateTitle(String value) {

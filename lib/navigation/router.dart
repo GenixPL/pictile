@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:pictile/navigation/my_page_route.dart';
 import 'package:pictile/navigation/routes.dart';
 import 'package:pictile/ui/home/home_page.dart';
-import 'package:pictile/ui/manage/add/add_set_page.dart';
 import 'package:pictile/ui/manage/menu/manage_menu_page.dart';
+import 'package:pictile/ui/manage/set/add_pair_page.dart';
 import 'package:pictile/ui/show/show_page.dart';
 import 'package:pictile/utils/logger.dart';
 
@@ -33,7 +33,7 @@ class Router with NavigatorObserver {
         return MyPageRoute(builder: (_) => ShowPage());
 
       case manageAddRoute:
-        return MyPageRoute(builder: (_) => AddSetPage());
+        return MyPageRoute(builder: (_) => AddPairPage());
 
       default:
         return _errorRoute('No path specified for: ${settings.name}.');

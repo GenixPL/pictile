@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:pictile/navigation/routes.dart';
 import 'package:pictile/ui/common/app_text_style.dart';
 import 'package:pictile/ui/common/basic_page.dart';
 import 'package:pictile/ui/common/circle_button.dart';
+
+import 'add_set_dialog.dart';
 
 class ManageMenuPage extends StatelessWidget {
   @override
@@ -22,7 +23,7 @@ class ManageMenuPage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: CircleButton(
-                onTap: () => Navigator.pushNamed(context, manageAddRoute),
+                onTap: () => _onPlusTap(context),
                 child: Icon(Icons.add, color: Colors.white),
                 backgroundColor: Colors.black,
                 paddingSize: 8,
@@ -32,5 +33,9 @@ class ManageMenuPage extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  _onPlusTap(BuildContext context) {
+    showDialog(context: context, child: AddSetDialog());
   }
 }
