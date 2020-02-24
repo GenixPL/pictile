@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
 
     return MaterialApp(
       theme: mainTheme,
-      initialRoute: manageMenuRoute, //TODO
+      initialRoute: manageAddRoute, //TODO
       onGenerateRoute: router.generateRoute,
     );
   }

@@ -12,6 +12,9 @@ dependencies:
 
   google_fonts: ^0.3.9
 
+  image_picker: ^0.6.3+4
+  permission_handler: ^4.2.0+hotfix.3
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

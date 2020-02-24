@@ -1,8 +1,20 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:pictile/ui/common/app_text_style.dart';
 import 'package:pictile/ui/common/basic_page.dart';
 
-class AddSetPage extends StatelessWidget {
+class AddSetPage extends StatefulWidget {
+  @override
+  _AddSetPageState createState() => _AddSetPageState();
+}
+
+class _AddSetPageState extends State<AddSetPage> {
+  File _img;
+  final _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return BasicPage(
@@ -12,14 +24,88 @@ class AddSetPage extends StatelessWidget {
           child: Text('CREATE NEW SET', style: blackTextStyle),
         ),
         Expanded(
-          child: Column(),
+          child: Column(
+            children: <Widget>[
+              Expanded(
+                flex: 2,
+                child: _buildImg(),
+              ),
+              Expanded(
+                flex: 3,
+                child: _buildTexts(),
+              ),
+            ],
+          ),
         ),
-        _buildBottomButtons(),
+        _buildBottomButtons(context),
       ],
     );
   }
 
-  Widget _buildBottomButtons() {
+  Widget _buildImg() {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Stack(
+        children: <Widget>[
+          if (_img != null)
+            Align(
+              child: Image.file(_img),
+              alignment: Alignment.center,
+            ),
+          GestureDetector(
+            onTap: _onImgTap,
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.black54,
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Center(
+                child: Text('TAP TO CHANGE', style: whiteTextStyle),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildTexts() {
+    return Padding(
+      padding: const EdgeInsets.only(left: 8, right: 8),
+      child: Form(
+        key: _formKey,
+        child: Column(
+          children: <Widget>[
+            Text('TITLE', style: blackTextStyle),
+            TextFormField(
+              decoration: InputDecoration(
+                contentPadding: EdgeInsets.fromLTRB(8, 0, 8, 0),
+                border: OutlineInputBorder(),
+              ),
+              maxLines: 1,
+              validator: _validateTitle,
+            ),
+            SizedBox(height: 8),
+            Text('DESCRIPTION', style: blackTextStyle),
+            Expanded(
+              child: TextFormField(
+                decoration: InputDecoration(
+                  contentPadding: EdgeInsets.fromLTRB(8, 4, 8, 4),
+                  border: OutlineInputBorder(),
+                ),
+                expands: true,
+                maxLines: null,
+                validator: _validateDescription,
+              ),
+            ),
+//        Expanded(child: Container(color: Colors.redAccent,),)
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildBottomButtons(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: <Widget>[
@@ -29,7 +115,7 @@ class AddSetPage extends StatelessWidget {
             height: 32,
             child: FlatButton(
               child: Text('CANCEL', style: blackSmallTextStyle),
-              onPressed: () => print('CREATE'),
+              onPressed: () => Navigator.pop(context),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(8),
               ),
@@ -49,11 +135,59 @@ class AddSetPage extends StatelessWidget {
               ),
               splashColor: Colors.white,
               child: Text('CREATE', style: whiteTextStyle),
-              onPressed: () => print('CREATE'),
+              onPressed: _onCreateTap,
             ),
           ),
         ),
       ],
     );
+  }
+
+  _onImgTap() async {
+    await PermissionHandler().requestPermissions(
+      [PermissionGroup.photos],
+    );
+
+    var img;
+    try {
+      img = await ImagePicker.pickImage(source: ImageSource.gallery);
+    } catch (e) {
+      print(e);
+    }
+    setState(() {
+      _img = img;
+    });
+  }
+
+  _onCreateTap() {
+    if (!_formKey.currentState.validate()) {
+      return;
+    }
+
+    
+  }
+
+  String _validateTitle(String value) {
+    if (value.isEmpty) {
+      return 'Please enter some text';
+    }
+
+    if (value.length > 50) {
+      return 'Max 50 characters';
+    }
+
+    return null;
+  }
+
+  String _validateDescription(String value) {
+    if (value.isEmpty) {
+      return 'Please enter some text';
+    }
+
+    if (value.length > 500) {
+      return 'Max 500 characters';
+    }
+
+    return null;
   }
 }
