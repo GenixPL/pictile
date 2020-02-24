@@ -1,6 +1,9 @@
 import 'package:pictile/utils/logger.dart';
 import 'package:sqflite/sqflite.dart';
 
+final String setsIdKey = 'id';
+final String setsNameKey = 'name';
+
 class Db {
   final String _TAG = 'DB';
 
@@ -8,8 +11,6 @@ class Db {
   final String _dbPath = 'pictile_db.db';
 
   final String _setsTableKey = 'sets';
-  final String _setsIdKey = 'id';
-  final String _setsNameKey = 'name';
 
   final String _pairsTableKey = 'pairs';
   final String _pairsIdKey = 'id';
@@ -56,7 +57,7 @@ class Db {
 
   Future<void> createSet(String name) async {
     final insertQuery = '''
-      INSERT INTO $_setsTableKey ($_setsNameKey) 
+      INSERT INTO $_setsTableKey ($setsNameKey) 
       VALUES ("$name")
     ''';
 
@@ -70,7 +71,7 @@ class Db {
   Future<void> updateSet(int id, String name) async {
     final insertQuery = '''
       UPDATE $_setsTableKey
-      SET $_setsNameKey = "$name"
+      SET $setsNameKey = "$name"
       WHERE id = $id;
     ''';
 
@@ -83,7 +84,7 @@ class Db {
 
   Future<void> deleteSet(int id) async {
     final insertQuery = '''DELETE FROM $_setsTableKey
-      WHERE $_setsIdKey=$id
+      WHERE $setsIdKey=$id
     ''';
 
     try {
@@ -105,8 +106,8 @@ class Db {
   Future<void> _createSetsTable(Database db) async {
     final createQuery = '''
       CREATE TABLE $_setsTableKey (
-        $_setsIdKey INTEGER PRIMARY KEY AUTOINCREMENT,
-        $_setsNameKey TEXT 
+        $setsIdKey INTEGER PRIMARY KEY AUTOINCREMENT,
+        $setsNameKey TEXT 
       )
     ''';
 

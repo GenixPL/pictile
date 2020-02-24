@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:pictile/main.dart';
 import 'package:pictile/ui/common/app_text_style.dart';
 
-class AddSetDialog extends StatelessWidget {
-  final _formKey = GlobalKey<FormState>();
-  final _nameController = TextEditingController();
+class ConfirmDeleteSetDialog extends StatelessWidget {
+  final int setId;
+
+  ConfirmDeleteSetDialog(this.setId);
 
   @override
   Widget build(BuildContext context) {
@@ -25,20 +26,19 @@ class AddSetDialog extends StatelessWidget {
                   children: <Widget>[
                     Padding(
                       padding: const EdgeInsets.all(16),
-                      child: Text('CREATE NEW SET', style: blackTextStyle),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 8, right: 8),
-                      child: Form(
-                        key: _formKey,
-                        child: TextFormField(
-                          controller: _nameController,
-                          decoration: InputDecoration(
-                            contentPadding: EdgeInsets.fromLTRB(8, 4, 8, 4),
-                            border: OutlineInputBorder(),
+                      child: Column(
+                        children: <Widget>[
+                          Text(
+                            'DO YOU WANT TO DELETE THIS SET',
+                            textAlign: TextAlign.center,
+                            style: blackTextStyle,
                           ),
-                          validator: _validateName,
-                        ),
+                          SizedBox(height: 8),
+                          Text(
+                            '(THIS CAN NOT BE UNDONE)',
+                            style: blackSmallTextStyle,
+                          ),
+                        ],
                       ),
                     ),
                     _buildBottomButtons(context),
@@ -76,13 +76,13 @@ class AddSetDialog extends StatelessWidget {
             height: 32,
             child: RaisedButton(
               padding: EdgeInsets.all(0),
-              color: Colors.black,
+              color: Colors.redAccent,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(8),
               ),
               splashColor: Colors.white,
-              child: Text('CREATE', style: whiteTextStyle),
-              onPressed: () => _onCreateTap(context),
+              child: Text('DELETE', style: blackSmallTextStyle),
+              onPressed: () => _onDeleteTap(context),
             ),
           ),
         ),
@@ -90,24 +90,8 @@ class AddSetDialog extends StatelessWidget {
     );
   }
 
-  String _validateName(String value) {
-    if (value.isEmpty) {
-      return 'Please enter some text';
-    }
-
-    if (value.length > 50) {
-      return 'Max 50 characters';
-    }
-
-    return null;
-  }
-
-  _onCreateTap(BuildContext context) async {
-    if (!_formKey.currentState.validate()) {
-      return;
-    }
-
-    await db.createSet(_nameController.text);
+  _onDeleteTap(BuildContext context) async {
+    await db.deleteSet(setId);
     Navigator.pop(context);
   }
 }

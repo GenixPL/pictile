@@ -17,4 +17,5 @@ TextStyle blackSmallTextStyle = TextStyle(
   color: Colors.black,
   fontSize: 12,
   fontWeight: FontWeight.w700,
+  letterSpacing: 2,
 );
