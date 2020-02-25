@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:pictile/main.dart';
 import 'package:pictile/ui/common/app_text_style.dart';
+import 'package:pictile/ui/common/buttons/my_flat_button.dart';
+import 'package:pictile/ui/common/buttons/my_raised_button.dart';
 
 class AddSetDialog extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
@@ -36,11 +38,14 @@ class AddSetDialog extends StatelessWidget {
                           decoration: InputDecoration(
                             contentPadding: EdgeInsets.fromLTRB(8, 4, 8, 4),
                             border: OutlineInputBorder(),
+                            hintText: 'Set name...',
+                            labelText: 'Set name',
                           ),
                           validator: _validateName,
                         ),
                       ),
                     ),
+                    SizedBox(height: 8),
                     _buildBottomButtons(context),
                   ],
                 ),
@@ -56,36 +61,14 @@ class AddSetDialog extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: SizedBox(
-            height: 32,
-            child: FlatButton(
-              child: Text('CANCEL', style: blackSmallTextStyle),
-              onPressed: () => Navigator.pop(context),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8),
-              ),
-              padding: EdgeInsets.all(0),
-            ),
-          ),
+        MyFlatButton(
+          text: 'CANCEL',
+          onTap: () => Navigator.pop(context),
         ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: SizedBox(
-            height: 32,
-            child: RaisedButton(
-              padding: EdgeInsets.all(0),
-              color: Colors.black,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8),
-              ),
-              splashColor: Colors.white,
-              child: Text('CREATE', style: whiteTextStyle),
-              onPressed: () => _onCreateTap(context),
-            ),
-          ),
-        ),
+        MyRaisedButton(
+          text: 'CREATE',
+          onTap: () => _onCreateTap(context),
+        )
       ],
     );
   }

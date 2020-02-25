@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pictile/navigation/routes.dart';
 import 'package:pictile/services/db.dart';
 import 'package:pictile/services/db_helper.dart';
+import 'package:pictile/ui/common/app_text_style.dart';
 import 'package:pictile/ui/common/basic_page.dart';
 import 'package:pictile/ui/common/header.dart';
 import 'package:pictile/ui/common/set_tile.dart';
@@ -12,7 +13,12 @@ class ShowPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BasicPage(
       children: <Widget>[
-        Header('SELECT SET'),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Header('SELECT SET'),
+          ],
+        ),
         Expanded(child: _buildTiles(context)),
       ],
     );
@@ -25,6 +31,10 @@ class ShowPage extends StatelessWidget {
       future: dbHelper.getSets(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
+          if (snapshot.data.length == 0) {
+            return _buildEmptyInfo();
+          }
+
           return MediaQuery.removePadding(
             context: context,
             removeTop: true,
@@ -47,6 +57,15 @@ class ShowPage extends StatelessWidget {
           ],
         );
       },
+    );
+  }
+
+  Widget _buildEmptyInfo() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        Text('YOU HAVE NO SETS', style: blackTextStyle),
+      ],
     );
   }
 

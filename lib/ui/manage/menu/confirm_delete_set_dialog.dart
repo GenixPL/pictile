@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:pictile/main.dart';
 import 'package:pictile/ui/common/app_text_style.dart';
+import 'package:pictile/ui/common/buttons/my_flat_button.dart';
+import 'package:pictile/ui/common/buttons/my_raised_button.dart';
 
 class ConfirmDeleteSetDialog extends StatelessWidget {
   final int setId;
@@ -56,35 +58,15 @@ class ConfirmDeleteSetDialog extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: SizedBox(
-            height: 32,
-            child: FlatButton(
-              child: Text('CANCEL', style: blackSmallTextStyle),
-              onPressed: () => Navigator.pop(context),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8),
-              ),
-              padding: EdgeInsets.all(0),
-            ),
-          ),
+        MyFlatButton(
+          text: 'CANCEL',
+          onTap: () => Navigator.pop(context),
         ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: SizedBox(
-            height: 32,
-            child: RaisedButton(
-              padding: EdgeInsets.all(0),
-              color: Colors.redAccent,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8),
-              ),
-              splashColor: Colors.white,
-              child: Text('DELETE', style: blackSmallTextStyle),
-              onPressed: () => _onDeleteTap(context),
-            ),
-          ),
+        MyRaisedButton(
+          text: 'DELETE',
+          onTap: () => _onDeleteTap(context),
+          backgroundColor: Colors.redAccent,
+          textStyle: blackSmallTextStyle,
         ),
       ],
     );

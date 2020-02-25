@@ -4,7 +4,10 @@ import 'package:pictile/services/db.dart';
 import 'package:pictile/services/db_helper.dart';
 import 'package:pictile/ui/common/app_text_style.dart';
 import 'package:pictile/ui/common/basic_page.dart';
-import 'package:pictile/ui/common/circle_button.dart';
+import 'package:pictile/ui/common/buttons/circle_button.dart';
+import 'package:pictile/ui/common/buttons/my_flat_button.dart';
+import 'package:pictile/ui/common/buttons/my_raised_button.dart';
+import 'package:pictile/utils/validator.dart';
 import 'package:provider/provider.dart';
 
 class ManageSetPage extends StatefulWidget {
@@ -56,7 +59,7 @@ class _ManageSetPageState extends State<ManageSetPage> {
                 contentPadding: EdgeInsets.fromLTRB(8, 4, 8, 4),
                 border: OutlineInputBorder(),
               ),
-              validator: _validateName,
+              validator: Validator.validateSetName,
             ),
           ),
         ],
@@ -98,35 +101,13 @@ class _ManageSetPageState extends State<ManageSetPage> {
         Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: SizedBox(
-                height: 32,
-                child: FlatButton(
-                  child: Text('CANCEL', style: blackSmallTextStyle),
-                  onPressed: () => Navigator.pop(context),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  padding: EdgeInsets.all(0),
-                ),
-              ),
+            MyFlatButton(
+              text: 'CANCEL',
+              onTap: () => Navigator.pop(context),
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: SizedBox(
-                height: 32,
-                child: RaisedButton(
-                  padding: EdgeInsets.all(0),
-                  color: Colors.black,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  splashColor: Colors.white,
-                  child: Text('SAVE', style: whiteTextStyle),
-                  onPressed: () => _onSaveTap(context),
-                ),
-              ),
+            MyRaisedButton(
+              text: 'SAVE',
+              onTap: () => _onSaveTap(context),
             ),
           ],
         ),
@@ -229,19 +210,8 @@ class _ManageSetPageState extends State<ManageSetPage> {
     );
   }
 
-  // FUNCTIONS
 
-  String _validateName(String value) {
-    if (value.isEmpty) {
-      return 'Please enter some text';
-    }
 
-    if (value.length > 50) {
-      return 'Max 50 characters';
-    }
-
-    return null;
-  }
 
   // FUNCTIONS
 
