@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-TextStyle whiteTextStyle = TextStyle(
+TextStyle smallWhiteTextStyle = TextStyle(
   color: Colors.white,
   fontSize: 12,
   fontWeight: FontWeight.w700,
@@ -13,7 +13,7 @@ TextStyle blackTextStyle = TextStyle(
   fontWeight: FontWeight.w700,
 );
 
-TextStyle blackSmallTextStyle = TextStyle(
+TextStyle smallBlackTextStyle = TextStyle(
   color: Colors.black,
   fontSize: 12,
   fontWeight: FontWeight.w700,

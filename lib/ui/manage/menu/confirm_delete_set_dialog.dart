@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:pictile/main.dart';
-import 'package:pictile/ui/common/app_text_style.dart';
+import 'package:pictile/themes/text_styles.dart';
+
+
 import 'package:pictile/ui/common/buttons/my_flat_button.dart';
 import 'package:pictile/ui/common/buttons/my_raised_button.dart';
 
@@ -38,7 +40,7 @@ class ConfirmDeleteSetDialog extends StatelessWidget {
                           SizedBox(height: 8),
                           Text(
                             '(THIS CAN NOT BE UNDONE)',
-                            style: blackSmallTextStyle,
+                            style: smallBlackTextStyle,
                           ),
                         ],
                       ),
@@ -66,7 +68,7 @@ class ConfirmDeleteSetDialog extends StatelessWidget {
           text: 'DELETE',
           onTap: () => _onDeleteTap(context),
           backgroundColor: Colors.redAccent,
-          textStyle: blackSmallTextStyle,
+          textStyle: smallBlackTextStyle,
         ),
       ],
     );

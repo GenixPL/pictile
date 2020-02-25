@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:pictile/ui/common/app_text_style.dart';
+import 'package:pictile/themes/text_styles.dart';
+
 
 class MyRaisedButton extends StatelessWidget {
   final String text;
@@ -25,7 +26,7 @@ class MyRaisedButton extends StatelessWidget {
           onPressed: onTap,
           child: Text(
             text,
-            style: (textStyle == null) ? whiteTextStyle : textStyle,
+            style: (textStyle == null) ? smallWhiteTextStyle : textStyle,
           ),
           padding: EdgeInsets.all(0),
           color: backgroundColor,

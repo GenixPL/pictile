@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:pictile/navigation/routes.dart';
 import 'package:pictile/services/db.dart';
 import 'package:pictile/services/db_helper.dart';
-import 'package:pictile/ui/common/app_text_style.dart';
+import 'package:pictile/themes/text_styles.dart';
+
 import 'package:pictile/ui/common/basic_page.dart';
 import 'package:pictile/ui/common/buttons/circle_button.dart';
 import 'package:pictile/ui/common/buttons/my_flat_button.dart';
@@ -49,7 +50,7 @@ class _ManageSetPageState extends State<ManageSetPage> {
       padding: const EdgeInsets.fromLTRB(8, 16, 8, 8),
       child: Column(
         children: <Widget>[
-          Text('TITLE', style: blackSmallTextStyle),
+          Text('TITLE', style: smallBlackTextStyle),
           SizedBox(height: 8),
           Form(
             key: _formKey,
@@ -72,7 +73,7 @@ class _ManageSetPageState extends State<ManageSetPage> {
       padding: const EdgeInsets.fromLTRB(8, 16, 8, 8),
       child: Column(
         children: <Widget>[
-          Text('PAIRS', style: blackSmallTextStyle),
+          Text('PAIRS', style: smallBlackTextStyle),
           SizedBox(height: 8),
           Expanded(child: _buildTiles(context)),
         ],

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pictile/navigation/routes.dart';
-import 'package:pictile/ui/common/app_text_style.dart';
+import 'package:pictile/themes/text_styles.dart';
+
 import 'package:pictile/ui/common/basic_page.dart';
 
 class HomePage extends StatelessWidget {
@@ -68,7 +69,7 @@ class HomePage extends StatelessWidget {
 
   Widget _buildHomeButton({String text, Function() onTap}) {
     return OutlineButton(
-      child: Text(text, style: blackSmallTextStyle),
+      child: Text(text, style: smallBlackTextStyle),
       splashColor: Colors.white,
       highlightedBorderColor: Colors.white,
       shape: RoundedRectangleBorder(

@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:pictile/navigation/routes.dart';
 import 'package:pictile/services/db.dart';
 import 'package:pictile/services/db_helper.dart';
-import 'package:pictile/ui/common/app_text_style.dart';
+import 'package:pictile/themes/text_styles.dart';
+
 import 'package:pictile/ui/common/basic_page.dart';
 import 'package:pictile/ui/common/buttons/circle_button.dart';
 import 'package:pictile/ui/manage/menu/confirm_delete_set_dialog.dart';

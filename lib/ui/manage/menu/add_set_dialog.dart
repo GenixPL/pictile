@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pictile/main.dart';
-import 'package:pictile/ui/common/app_text_style.dart';
+import 'package:pictile/themes/text_styles.dart';
+
 import 'package:pictile/ui/common/buttons/my_flat_button.dart';
 import 'package:pictile/ui/common/buttons/my_raised_button.dart';
 import 'package:pictile/utils/validator.dart';

@@ -5,7 +5,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:pictile/services/db.dart';
 import 'package:pictile/services/db_helper.dart';
-import 'package:pictile/ui/common/app_text_style.dart';
+import 'package:pictile/themes/text_styles.dart';
+
 import 'package:pictile/ui/common/basic_page.dart';
 import 'package:pictile/utils/validator.dart';
 import 'package:provider/provider.dart';
@@ -80,7 +81,7 @@ class _EditPairPageState extends State<EditPairPage> {
                 borderRadius: BorderRadius.circular(8),
               ),
               child: Center(
-                child: Text('TAP TO CHANGE', style: whiteTextStyle),
+                child: Text('TAP TO CHANGE', style: smallWhiteTextStyle),
               ),
             ),
           ),
@@ -137,7 +138,7 @@ class _EditPairPageState extends State<EditPairPage> {
           child: SizedBox(
             height: 32,
             child: FlatButton(
-              child: Text('CANCEL', style: blackSmallTextStyle),
+              child: Text('CANCEL', style: smallBlackTextStyle),
               onPressed: () => Navigator.pop(context),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(8),
@@ -157,7 +158,7 @@ class _EditPairPageState extends State<EditPairPage> {
                 borderRadius: BorderRadius.circular(8),
               ),
               splashColor: Colors.white,
-              child: Text('SAVE', style: whiteTextStyle),
+              child: Text('SAVE', style: smallWhiteTextStyle),
               onPressed: () => _onSaveTap(context),
             ),
           ),

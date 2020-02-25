@@ -2,7 +2,8 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:pictile/services/db.dart';
-import 'package:pictile/ui/common/app_text_style.dart';
+import 'package:pictile/themes/text_styles.dart';
+
 import 'package:pictile/ui/common/basic_page.dart';
 
 class ShowTapModePage extends StatefulWidget {
@@ -23,7 +24,7 @@ class _ShowTapModePageState extends State<ShowTapModePage> {
     return BasicPage(
       children: <Widget>[
         SizedBox(height: 16),
-        Text('(TAP TO SHOW OR HIDE)', style: blackSmallTextStyle),
+        Text('(TAP TO SHOW OR HIDE)', style: smallBlackTextStyle),
         Expanded(
           child: Padding(
             padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
@@ -139,7 +140,7 @@ class _ShowTapModePageState extends State<ShowTapModePage> {
                 borderRadius: BorderRadius.circular(8),
               ),
               splashColor: Colors.white,
-              child: Text('PREVIOUS', style: whiteTextStyle),
+              child: Text('PREVIOUS', style: smallWhiteTextStyle),
               onPressed: _getPrevFunction(),
             ),
           ),
@@ -155,7 +156,7 @@ class _ShowTapModePageState extends State<ShowTapModePage> {
                 borderRadius: BorderRadius.circular(8),
               ),
               splashColor: Colors.white,
-              child: Text('NEXT', style: whiteTextStyle),
+              child: Text('NEXT', style: smallWhiteTextStyle),
               onPressed: _getNextFunction(),
             ),
           ),

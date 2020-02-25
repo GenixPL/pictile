@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pictile/ui/common/app_text_style.dart';
+import 'package:pictile/themes/text_styles.dart';
 
 class MyFlatButton extends StatelessWidget {
   final String text;
@@ -21,7 +21,7 @@ class MyFlatButton extends StatelessWidget {
           onPressed: onTap,
           child: Text(
             text,
-            style: blackSmallTextStyle,
+            style: smallBlackTextStyle,
           ),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8),
