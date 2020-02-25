@@ -6,7 +6,7 @@ import 'package:pictile/ui/manage/menu/manage_menu_page.dart';
 import 'package:pictile/ui/manage/set/add_pair_page.dart';
 import 'package:pictile/ui/manage/set/edit_pair_page.dart';
 import 'package:pictile/ui/manage/set/manage_set_page.dart';
-import 'package:pictile/ui/show/show_menu_page.dart';
+import 'package:pictile/ui/show/menu/show_menu_page.dart';
 import 'package:pictile/ui/show/tap_mode/show_tap_mode_page.dart';
 import 'package:pictile/utils/logger.dart';
 

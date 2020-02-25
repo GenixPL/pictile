@@ -49,23 +49,9 @@ class _ShowTapModePageState extends State<ShowTapModePage> {
   }
 
   Widget _buildContent(Map map) {
-    final _img = File(map[pairsImgPathKey]);
-
     return Stack(
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Expanded(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Image.file(_img),
-                ],
-              ),
-            ),
-          ],
-        ),
+        _buildImg(map),
         if (!_isHidden)
           Container(
             decoration: BoxDecoration(
@@ -103,6 +89,37 @@ class _ShowTapModePageState extends State<ShowTapModePage> {
               ],
             ),
           ),
+      ],
+    );
+  }
+
+  Widget _buildImg(Map map) {
+    final _img = File(map[pairsImgPathKey]);
+
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        Expanded(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              FutureBuilder(
+                future: _img.exists(),
+                builder: (context, snap) {
+                  if (snap.connectionState == ConnectionState.done) {
+                    if (snap.data == true) {
+                      return Image.file(_img);
+                    } else {
+                      return Text('IMAGE NOT FOUND', style: blackTextStyle);
+                    }
+                  }
+
+                  return CircularProgressIndicator();
+                },
+              ),
+            ],
+          ),
+        ),
       ],
     );
   }
