@@ -4,6 +4,7 @@ import 'package:pictile/navigation/routes.dart';
 import 'package:pictile/ui/home/home_page.dart';
 import 'package:pictile/ui/manage/menu/manage_menu_page.dart';
 import 'package:pictile/ui/manage/set/add_pair_page.dart';
+import 'package:pictile/ui/manage/set/manage_set_page.dart';
 import 'package:pictile/ui/show/show_page.dart';
 import 'package:pictile/utils/logger.dart';
 
@@ -32,8 +33,11 @@ class Router with NavigatorObserver {
       case showMenuRoute:
         return MyPageRoute(builder: (_) => ShowPage());
 
-      case manageAddRoute:
+      case manageAddPairRoute:
         return MyPageRoute(builder: (_) => AddPairPage());
+
+      case manageSetRoute:
+        return MyPageRoute(builder: (_) => ManageSetPage(args));
 
       default:
         return _errorRoute('No path specified for: ${settings.name}.');

@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:pictile/main.dart';
+import 'package:pictile/navigation/routes.dart';
 import 'package:pictile/services/db.dart';
+import 'package:pictile/services/db_helper.dart';
 import 'package:pictile/ui/common/app_text_style.dart';
 import 'package:pictile/ui/common/basic_page.dart';
 import 'package:pictile/ui/common/circle_button.dart';
 import 'package:pictile/ui/manage/menu/confirm_delete_set_dialog.dart';
+import 'package:provider/provider.dart';
 
 import 'add_set_dialog.dart';
 
@@ -22,7 +25,7 @@ class _ManageMenuPageState extends State<ManageMenuPage> {
           padding: const EdgeInsets.all(16),
           child: Text('YOUR SETS', style: blackTextStyle),
         ),
-        Expanded(child: _buildTiles()),
+        Expanded(child: _buildTiles(context)),
         Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: <Widget>[
@@ -41,9 +44,11 @@ class _ManageMenuPageState extends State<ManageMenuPage> {
     );
   }
 
-  Widget _buildTiles() {
+  Widget _buildTiles(BuildContext context) {
+    final dbHelper = Provider.of<DbHelper>(context);
+
     return FutureBuilder(
-      future: db.getSets(),
+      future: dbHelper.getSets(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           return MediaQuery.removePadding(
@@ -67,22 +72,9 @@ class _ManageMenuPageState extends State<ManageMenuPage> {
                         child: IntrinsicHeight(
                           child: Row(
                             children: [
-                              Icon(Icons.folder_open, color: Colors.grey),
-                              Padding(
-                                padding: const EdgeInsets.fromLTRB(4, 8, 4, 8),
-                                child: Container(
-                                  width: 2,
-                                  decoration: BoxDecoration(
-                                    color: Colors.grey,
-                                    borderRadius: BorderRadius.circular(8),
-                                  ),
-                                ),
-                              ),
                               Expanded(
-                                child: Text(
-                                  snapshot.data[i][setsNameKey],
-                                  style: TextStyle(fontWeight: FontWeight.w500),
-                                ),
+                                child: _buildClickableInfo(
+                                    context, snapshot.data[i]),
                               ),
                               CircleButton(
                                 child: Icon(
@@ -110,6 +102,36 @@ class _ManageMenuPageState extends State<ManageMenuPage> {
           ],
         );
       },
+    );
+  }
+
+  Widget _buildClickableInfo(BuildContext context, Map map) {
+    return GestureDetector(
+      onTap: () => Navigator.pushNamed(context, manageSetRoute, arguments: map),
+      child: Container(
+        color: Colors.transparent, // to expand clickable area
+        child: Row(
+          children: <Widget>[
+            Icon(Icons.folder_open, color: Colors.grey),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(4, 8, 4, 8),
+              child: Container(
+                width: 2,
+                decoration: BoxDecoration(
+                  color: Colors.grey,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
+            ),
+            Expanded(
+              child: Text(
+                map[setsNameKey],
+                style: TextStyle(fontWeight: FontWeight.w500),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 
