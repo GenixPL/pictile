@@ -22,7 +22,8 @@ class HomePage extends StatelessWidget {
                     child: Text(
                       "The point isn't to win the game. The point is to play a beautiful game.",
                       textAlign: TextAlign.center,
-                      style: GoogleFonts.robotoSlab(
+                      style: TextStyle(
+                        fontFamily: 'RobotoSlab',
                         color: Colors.white,
                         fontWeight: FontWeight.w400,
                         fontSize: 16,
