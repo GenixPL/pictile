@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:pictile/main.dart';
 import 'package:pictile/navigation/routes.dart';
 import 'package:pictile/ui/common/app_text_style.dart';
 import 'package:pictile/ui/common/basic_page.dart';
@@ -68,6 +69,10 @@ class HomePage extends StatelessWidget {
                           context,
                           manageMenuRoute,
                         ),
+                      ),
+                      RaisedButton(
+                        child: Text('REMOVE DB'),
+                        onPressed: () async => await db.deleteDb(),
                       ),
                     ],
                   ),

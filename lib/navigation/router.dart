@@ -4,8 +4,10 @@ import 'package:pictile/navigation/routes.dart';
 import 'package:pictile/ui/home/home_page.dart';
 import 'package:pictile/ui/manage/menu/manage_menu_page.dart';
 import 'package:pictile/ui/manage/set/add_pair_page.dart';
+import 'package:pictile/ui/manage/set/edit_pair_page.dart';
 import 'package:pictile/ui/manage/set/manage_set_page.dart';
-import 'package:pictile/ui/show/show_page.dart';
+import 'package:pictile/ui/show/show_menu_page.dart';
+import 'package:pictile/ui/show/tap_mode/show_tap_mode_page.dart';
 import 'package:pictile/utils/logger.dart';
 
 import 'stack.dart' as s;
@@ -34,10 +36,16 @@ class Router with NavigatorObserver {
         return MyPageRoute(builder: (_) => ShowPage());
 
       case manageAddPairRoute:
-        return MyPageRoute(builder: (_) => AddPairPage());
+        return MyPageRoute(builder: (_) => AddPairPage(args));
 
       case manageSetRoute:
         return MyPageRoute(builder: (_) => ManageSetPage(args));
+
+      case manageEditPairRoute:
+        return MyPageRoute(builder: (_) => EditPairPage(args));
+
+      case showTapModeRoute:
+        return MyPageRoute(builder: (_) => ShowTapModePage(args));
 
       default:
         return _errorRoute('No path specified for: ${settings.name}.');

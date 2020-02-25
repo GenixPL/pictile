@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pictile/main.dart';
+import 'package:pictile/navigation/routes.dart';
 import 'package:pictile/services/db.dart';
 import 'package:pictile/services/db_helper.dart';
 import 'package:pictile/ui/common/app_text_style.dart';
@@ -35,7 +35,7 @@ class _ManageSetPageState extends State<ManageSetPage> {
         SizedBox(height: 16),
         Text('MANAGE SET', style: blackTextStyle),
         _buildTitle(),
-        Expanded(child: Container()),
+        Expanded(child: _buildPairs()),
         _buildBottomButtons(context),
       ],
     );
@@ -59,6 +59,19 @@ class _ManageSetPageState extends State<ManageSetPage> {
               validator: _validateName,
             ),
           ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildPairs() {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(8, 16, 8, 8),
+      child: Column(
+        children: <Widget>[
+          Text('PAIRS', style: blackSmallTextStyle),
+          SizedBox(height: 8),
+          Expanded(child: _buildTiles(context)),
         ],
       ),
     );
@@ -121,6 +134,103 @@ class _ManageSetPageState extends State<ManageSetPage> {
     );
   }
 
+  Widget _buildTiles(BuildContext context) {
+    final dbHelper = Provider.of<DbHelper>(context);
+
+    return FutureBuilder(
+      future: dbHelper.getPairsForSet(widget.map[setsIdKey]),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          return MediaQuery.removePadding(
+            context: context,
+            removeTop: true,
+            child: ListView(
+              children: <Widget>[
+                for (int i = 0; i < snapshot.data.length; i++)
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(8, 0, 8, 8),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(8),
+                        boxShadow: [
+                          BoxShadow(color: Colors.black, blurRadius: 2),
+                        ],
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 8),
+                        child: IntrinsicHeight(
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: _buildClickableInfo(
+                                    context, snapshot.data[i]),
+                              ),
+                              CircleButton(
+                                child: Icon(
+                                  Icons.delete,
+                                  color: Colors.redAccent,
+                                ),
+                                onTap: () =>
+                                    _onTrashTap(snapshot.data[i][pairsIdKey]),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+              ],
+            ),
+          );
+        }
+
+        return Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            CircularProgressIndicator(),
+          ],
+        );
+      },
+    );
+  }
+
+  Widget _buildClickableInfo(BuildContext context, Map map) {
+    return GestureDetector(
+      onTap: () => Navigator.pushNamed(
+        context,
+        manageEditPairRoute,
+        arguments: map,
+      ),
+      child: Container(
+        color: Colors.transparent, // to expand clickable area
+        child: Row(
+          children: <Widget>[
+            Icon(Icons.image, color: Colors.grey),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(4, 8, 4, 8),
+              child: Container(
+                width: 2,
+                decoration: BoxDecoration(
+                  color: Colors.grey,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
+            ),
+            Expanded(
+              child: Text(
+                map[pairsTitleKey],
+                style: TextStyle(fontWeight: FontWeight.w500),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  // FUNCTIONS
+
   String _validateName(String value) {
     if (value.isEmpty) {
       return 'Please enter some text';
@@ -147,6 +257,13 @@ class _ManageSetPageState extends State<ManageSetPage> {
   }
 
   _onPlusTap(BuildContext context) {
-    print('ADD');
+    Navigator.pushNamed(context, manageAddPairRoute, arguments: widget.map);
+  }
+
+  _onTrashTap(int pairId) async {
+    final db = Provider.of<DbHelper>(context, listen: false);
+    await db.deletePair(pairId);
+
+    setState(() {});
   }
 }

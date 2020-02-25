@@ -9,16 +9,16 @@ import 'package:pictile/ui/common/app_text_style.dart';
 import 'package:pictile/ui/common/basic_page.dart';
 import 'package:provider/provider.dart';
 
-class AddPairPage extends StatefulWidget {
+class EditPairPage extends StatefulWidget {
   final Map map;
 
-  AddPairPage(this.map);
+  EditPairPage(this.map);
 
   @override
-  _AddPairPageState createState() => _AddPairPageState();
+  _EditPairPageState createState() => _EditPairPageState();
 }
 
-class _AddPairPageState extends State<AddPairPage> {
+class _EditPairPageState extends State<EditPairPage> {
   File _img;
 
   final _formKey = GlobalKey<FormState>();
@@ -26,12 +26,21 @@ class _AddPairPageState extends State<AddPairPage> {
   final _descriptionController = TextEditingController();
 
   @override
+  void initState() {
+    super.initState();
+
+    _img = File(widget.map[pairsImgPathKey]);
+    _titleController.text = widget.map[pairsTitleKey];
+    _descriptionController.text = widget.map[pairsDescriptionKey];
+  }
+
+  @override
   Widget build(BuildContext context) {
     return BasicPage(
       children: <Widget>[
         Padding(
           padding: const EdgeInsets.all(16),
-          child: Text('CREATE NEW PAIR', style: blackTextStyle),
+          child: Text('EDIT PAIR', style: blackTextStyle),
         ),
         Expanded(
           child: Column(
@@ -146,14 +155,16 @@ class _AddPairPageState extends State<AddPairPage> {
                 borderRadius: BorderRadius.circular(8),
               ),
               splashColor: Colors.white,
-              child: Text('CREATE', style: whiteTextStyle),
-              onPressed: () => _onCreateTap(context),
+              child: Text('SAVE', style: whiteTextStyle),
+              onPressed: () => _onSaveTap(context),
             ),
           ),
         ),
       ],
     );
   }
+
+  // FUNCTIONS
 
   String _validateTitle(String value) {
     if (value.isEmpty) {
@@ -198,15 +209,16 @@ class _AddPairPageState extends State<AddPairPage> {
     });
   }
 
-  _onCreateTap(BuildContext context) async {
+  _onSaveTap(BuildContext context) async {
     if (!_formKey.currentState.validate() || _img == null) {
       // TODO show info
       return;
     }
 
     final db = Provider.of<DbHelper>(context, listen: false);
-    await db.createPair(
-      widget.map[setsIdKey],
+    await db.updatePair(
+      widget.map[pairsIdKey],
+      widget.map[pairsSetIdKey],
       _img.path,
       _titleController.text,
       _descriptionController.text,

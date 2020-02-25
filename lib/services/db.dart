@@ -4,20 +4,20 @@ import 'package:sqflite/sqflite.dart';
 final String setsIdKey = 'id';
 final String setsNameKey = 'name';
 
+final String pairsIdKey = 'id';
+final String pairsSetIdKey = 'set_id';
+final String pairsImgPathKey = 'img_path';
+final String pairsTitleKey = 'title';
+final String pairsDescriptionKey = 'description';
+final String pairsOrderKey = 'order_key';
+
 class Db {
   final String _TAG = 'DB';
 
   Database _db;
   final String _dbPath = 'pictile_db.db';
-
   final String _setsTableKey = 'sets';
-
   final String _pairsTableKey = 'pairs';
-  final String _pairsIdKey = 'id';
-  final String _pairsImgPathKey = 'img_path';
-  final String _pairsTitleKey = 'title';
-  final String _pairsDescriptionKey = 'description';
-  final String _pairsOrderKey = 'order_key';
 
   init() async {
     // open the database
@@ -40,6 +40,8 @@ class Db {
       await deleteDatabase(await _getPath());
     }
   }
+
+  // SETS
 
   Future<List<Map>> getSets() async {
     final selectQuery = '''
@@ -83,8 +85,80 @@ class Db {
   }
 
   Future<void> deleteSet(int id) async {
-    final insertQuery = '''DELETE FROM $_setsTableKey
+    final insertQuery = '''
+      DELETE FROM $_setsTableKey
       WHERE $setsIdKey=$id
+    ''';
+
+    try {
+      await _db.execute(insertQuery);
+    } catch (e) {
+      _log(e);
+    }
+  }
+
+  // PAIRS
+
+  Future<List<Map>> getPairsForSet(int setId) async {
+    final selectQuery = '''
+      SELECT * FROM $_pairsTableKey
+      WHERE $pairsSetIdKey = $setId
+    ''';
+
+    try {
+      final result = await _db.rawQuery(selectQuery);
+      return result;
+    } catch (e) {
+      _log(e);
+      return [];
+    }
+  }
+
+  Future<void> createPair(
+    int setId,
+    String imgPath,
+    String pairTitle,
+    String pairDescription,
+  ) async {
+    //TODO add order
+    final insertQuery = '''
+      INSERT INTO $_pairsTableKey ($pairsSetIdKey, $pairsImgPathKey, 
+        $pairsTitleKey, $pairsDescriptionKey) 
+      VALUES ($setId, "$imgPath", "$pairTitle", "$pairDescription")
+    ''';
+
+    try {
+      await _db.execute(insertQuery);
+    } catch (e) {
+      _log(e);
+    }
+  }
+
+  Future<void> updatePair(
+    int id,
+    int setId,
+    String imgPath,
+    String pairTitle,
+    String pairDescription,
+  ) async {
+    final insertQuery = '''
+      UPDATE $_pairsTableKey
+      SET $pairsSetIdKey = $setId, $pairsImgPathKey = "$imgPath", 
+        $pairsTitleKey = "$pairTitle", $pairsDescriptionKey = "$pairDescription"
+      WHERE id = $id;
+    ''';
+
+    try {
+      await _db.execute(insertQuery);
+    } catch (e) {
+      _log(e);
+    }
+  }
+
+  Future<void> deletePair(int id) async {
+    final insertQuery = '''
+      DELETE FROM $_pairsTableKey
+      WHERE $pairsIdKey = $id
     ''';
 
     try {
@@ -121,11 +195,12 @@ class Db {
   Future<void> _createPairsTable(Database db) async {
     final createQuery = '''
       CREATE TABLE $_pairsTableKey (
-        $_pairsIdKey INTEGER PRIMARY KEY AUTOINCREMENT,
-        $_pairsImgPathKey TEXT,
-        $_pairsTitleKey TEXT,
-        $_pairsDescriptionKey TEXT,
-        $_pairsOrderKey INTEGER
+        $pairsIdKey INTEGER PRIMARY KEY AUTOINCREMENT,
+        $pairsSetIdKey INTEGER,
+        $pairsImgPathKey TEXT,
+        $pairsTitleKey TEXT,
+        $pairsDescriptionKey TEXT,
+        $pairsOrderKey INTEGER
       )
     ''';
 

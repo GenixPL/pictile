@@ -4,41 +4,18 @@ import 'package:pictile/services/db.dart';
 import 'package:pictile/services/db_helper.dart';
 import 'package:pictile/ui/common/app_text_style.dart';
 import 'package:pictile/ui/common/basic_page.dart';
-import 'package:pictile/ui/common/circle_button.dart';
-import 'package:pictile/ui/manage/menu/confirm_delete_set_dialog.dart';
 import 'package:provider/provider.dart';
 
-import 'add_set_dialog.dart';
-
-class ManageMenuPage extends StatefulWidget {
-  @override
-  _ManageMenuPageState createState() => _ManageMenuPageState();
-}
-
-class _ManageMenuPageState extends State<ManageMenuPage> {
+class ShowPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BasicPage(
       children: <Widget>[
         Padding(
           padding: const EdgeInsets.all(16),
-          child: Text('YOUR SETS', style: blackTextStyle),
+          child: Text('SELECT SET', style: blackTextStyle),
         ),
         Expanded(child: _buildTiles(context)),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: CircleButton(
-                onTap: () => _onPlusTap(context),
-                child: Icon(Icons.add, color: Colors.white),
-                backgroundColor: Colors.black,
-                paddingSize: 8,
-              ),
-            ),
-          ],
-        ),
       ],
     );
   }
@@ -75,14 +52,6 @@ class _ManageMenuPageState extends State<ManageMenuPage> {
                                 child: _buildClickableInfo(
                                     context, snapshot.data[i]),
                               ),
-                              CircleButton(
-                                child: Icon(
-                                  Icons.delete,
-                                  color: Colors.redAccent,
-                                ),
-                                onTap: () =>
-                                    _onTrashTap(snapshot.data[i][setsIdKey]),
-                              ),
                             ],
                           ),
                         ),
@@ -106,12 +75,15 @@ class _ManageMenuPageState extends State<ManageMenuPage> {
 
   Widget _buildClickableInfo(BuildContext context, Map map) {
     return GestureDetector(
-      onTap: () => Navigator.pushNamed(context, manageSetRoute, arguments: map),
+      onTap: () => _onTileTap(context, map),
       child: Container(
         color: Colors.transparent, // to expand clickable area
         child: Row(
           children: <Widget>[
-            Icon(Icons.folder_open, color: Colors.grey),
+            Padding(
+              padding: const EdgeInsets.only(top: 12, bottom: 12),
+              child: Icon(Icons.folder_open, color: Colors.grey),
+            ),
             Padding(
               padding: const EdgeInsets.fromLTRB(4, 8, 4, 8),
               child: Container(
@@ -134,13 +106,15 @@ class _ManageMenuPageState extends State<ManageMenuPage> {
     );
   }
 
-  _onPlusTap(BuildContext context) async {
-    await showDialog(context: context, child: AddSetDialog());
-    setState(() {});
-  }
+  _onTileTap(BuildContext context, Map map) async {
+    final db = Provider.of<DbHelper>(context, listen: false);
+    final pairMaps = await db.getPairsForSet(map[setsIdKey]);
 
-  _onTrashTap(int setId) async {
-    await showDialog(context: context, child: ConfirmDeleteSetDialog(setId));
-    setState(() {});
+    if (pairMaps.length == 0) {
+      // TODO show info
+      return;
+    }
+
+    Navigator.pushNamed(context, showTapModeRoute, arguments: pairMaps);
   }
 }
