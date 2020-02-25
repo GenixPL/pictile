@@ -53,7 +53,8 @@ class BasicPage extends StatelessWidget {
               ),
               Text(
                 'Pictile',
-                style: GoogleFonts.pacifico(
+                style: TextStyle(
+                  fontFamily: 'Pacifico',
                   fontWeight: FontWeight.w600,
                   letterSpacing: 4,
                   fontSize: 18,
