@@ -16,6 +16,7 @@ class ShowTapModePage extends StatefulWidget {
 
 class _ShowTapModePageState extends State<ShowTapModePage> {
   int _i = 0;
+  bool _isHidden = true;
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +28,11 @@ class _ShowTapModePageState extends State<ShowTapModePage> {
           child: Padding(
             padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
             child: GestureDetector(
-              onTap: () => print('TAPPED'),
+              onTap: () {
+                setState(() {
+                  _isHidden = !_isHidden;
+                });
+              },
               child: Container(
                 decoration: BoxDecoration(
                   color: Colors.grey[200],
@@ -46,17 +51,58 @@ class _ShowTapModePageState extends State<ShowTapModePage> {
   Widget _buildContent(Map map) {
     final _img = File(map[pairsImgPathKey]);
 
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        Expanded(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Image.file(_img),
-            ],
-          ),
+    return Stack(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Image.file(_img),
+                ],
+              ),
+            ),
+          ],
         ),
+        if (!_isHidden)
+          Container(
+            decoration: BoxDecoration(
+              color: Colors.black54,
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      children: <Widget>[
+                        Text(
+                          map[pairsTitleKey],
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w600,
+                            fontSize: 18,
+                          ),
+                        ),
+                        SizedBox(height: 8),
+                        Text(
+                          map[pairsDescriptionKey],
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
       ],
     );
   }
@@ -77,7 +123,7 @@ class _ShowTapModePageState extends State<ShowTapModePage> {
               ),
               splashColor: Colors.white,
               child: Text('PREVIOUS', style: whiteTextStyle),
-              onPressed: _onPrevTap(),
+              onPressed: _getPrevFunction(),
             ),
           ),
         ),
@@ -93,7 +139,7 @@ class _ShowTapModePageState extends State<ShowTapModePage> {
               ),
               splashColor: Colors.white,
               child: Text('NEXT', style: whiteTextStyle),
-              onPressed: _onNextTap(),
+              onPressed: _getNextFunction(),
             ),
           ),
         ),
@@ -101,18 +147,19 @@ class _ShowTapModePageState extends State<ShowTapModePage> {
     );
   }
 
-  Function() _onPrevTap() {
+  Function() _getPrevFunction() {
     if (_i == 0) {
       return null;
     } else {
       return () {
         _i--;
+        _isHidden = true;
         setState(() {});
       };
     }
   }
 
-  Function() _onNextTap() {
+  Function() _getNextFunction() {
     final max = widget.maps.length;
 
     if (_i == max - 1) {
@@ -120,6 +167,7 @@ class _ShowTapModePageState extends State<ShowTapModePage> {
     } else {
       return () {
         _i++;
+        _isHidden = true;
         setState(() {});
       };
     }

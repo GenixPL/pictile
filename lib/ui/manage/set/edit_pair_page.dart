@@ -116,6 +116,7 @@ class _EditPairPageState extends State<EditPairPage> {
                 ),
                 expands: true,
                 maxLines: null,
+                maxLength: 500,
                 validator: _validateDescription,
               ),
             ),

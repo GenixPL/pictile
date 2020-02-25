@@ -107,6 +107,7 @@ class _AddPairPageState extends State<AddPairPage> {
                 ),
                 expands: true,
                 maxLines: null,
+                maxLength: 500,
                 validator: _validateDescription,
               ),
             ),
