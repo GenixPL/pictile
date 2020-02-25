@@ -1,8 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:pictile/main.dart';
 
-// TODO handle lack of img in widgets
-
 class DbHelper with ChangeNotifier {
   // SETS
 

@@ -20,13 +20,6 @@ final db = Db();
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(
-      SystemUiOverlayStyle(
-        statusBarColor: Colors.white,
-        statusBarBrightness: Brightness.dark,
-      ),
-    );
-
     return ChangeNotifierProvider<DbHelper>(
       create: (_) => DbHelper(),
       child: MaterialApp(
