@@ -52,7 +52,7 @@ class HomePage extends StatelessWidget {
 
   Widget _buildQuote() {
     final text =
-        '"The point isn\'t to win the game. The point is to play a beautiful game."';
+        '"The point isn\'t to win the game. The point is to play a beautiful game." ~ Rothfuss';
 
     return Center(
       child: Text(
