@@ -70,10 +70,10 @@ class HomePage extends StatelessWidget {
                           manageMenuRoute,
                         ),
                       ),
-                      RaisedButton(
-                        child: Text('REMOVE DB'),
-                        onPressed: () async => await db.deleteDb(),
-                      ),
+//                      RaisedButton(
+//                        child: Text('REMOVE DB'),
+//                        onPressed: () async => await db.deleteDb(),
+//                      ),
                     ],
                   ),
                 ),
