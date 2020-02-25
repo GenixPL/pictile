@@ -7,6 +7,7 @@ import 'package:pictile/services/db.dart';
 import 'package:pictile/services/db_helper.dart';
 import 'package:pictile/ui/common/app_text_style.dart';
 import 'package:pictile/ui/common/basic_page.dart';
+import 'package:pictile/utils/validator.dart';
 import 'package:provider/provider.dart';
 
 class AddPairPage extends StatefulWidget {
@@ -94,7 +95,7 @@ class _AddPairPageState extends State<AddPairPage> {
                 border: OutlineInputBorder(),
               ),
               maxLines: 1,
-              validator: _validateTitle,
+              validator: Validator.validatePairTitle,
             ),
             SizedBox(height: 8),
             Text('DESCRIPTION', style: blackTextStyle),
@@ -108,7 +109,7 @@ class _AddPairPageState extends State<AddPairPage> {
                 expands: true,
                 maxLines: null,
                 maxLength: 500,
-                validator: _validateDescription,
+                validator: Validator.validatePairDescription,
               ),
             ),
 //        Expanded(child: Container(color: Colors.redAccent,),)
@@ -154,30 +155,6 @@ class _AddPairPageState extends State<AddPairPage> {
         ),
       ],
     );
-  }
-
-  String _validateTitle(String value) {
-    if (value.isEmpty) {
-      return 'Please enter some text';
-    }
-
-    if (value.length > 50) {
-      return 'Max 50 characters';
-    }
-
-    return null;
-  }
-
-  String _validateDescription(String value) {
-    if (value.isEmpty) {
-      return 'Please enter some text';
-    }
-
-    if (value.length > 500) {
-      return 'Max 500 characters';
-    }
-
-    return null;
   }
 
   _onImgTap() async {

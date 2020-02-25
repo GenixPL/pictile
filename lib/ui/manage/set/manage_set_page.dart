@@ -210,9 +210,6 @@ class _ManageSetPageState extends State<ManageSetPage> {
     );
   }
 
-
-
-
   // FUNCTIONS
 
   _onSaveTap(BuildContext context) async {

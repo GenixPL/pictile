@@ -3,6 +3,7 @@ import 'package:pictile/main.dart';
 import 'package:pictile/ui/common/app_text_style.dart';
 import 'package:pictile/ui/common/buttons/my_flat_button.dart';
 import 'package:pictile/ui/common/buttons/my_raised_button.dart';
+import 'package:pictile/utils/validator.dart';
 
 class AddSetDialog extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
@@ -41,7 +42,7 @@ class AddSetDialog extends StatelessWidget {
                             hintText: 'Set name...',
                             labelText: 'Set name',
                           ),
-                          validator: _validateName,
+                          validator: Validator.validateSetName,
                         ),
                       ),
                     ),
@@ -71,18 +72,6 @@ class AddSetDialog extends StatelessWidget {
         )
       ],
     );
-  }
-
-  String _validateName(String value) {
-    if (value.isEmpty) {
-      return 'Please enter some text';
-    }
-
-    if (value.length > 50) {
-      return 'Max 50 characters';
-    }
-
-    return null;
   }
 
   _onCreateTap(BuildContext context) async {
