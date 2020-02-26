@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:pictile/navigation/routes.dart';
 import 'package:pictile/services/db.dart';
@@ -132,6 +134,7 @@ class _ManageSetPageState extends State<ManageSetPage> {
                   Padding(
                     padding: const EdgeInsets.fromLTRB(8, 0, 8, 8),
                     child: Container(
+                      height: 52,
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(8),
@@ -139,25 +142,44 @@ class _ManageSetPageState extends State<ManageSetPage> {
                           BoxShadow(color: Colors.black, blurRadius: 2),
                         ],
                       ),
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 8),
-                        child: IntrinsicHeight(
-                          child: Row(
-                            children: [
-                              Expanded(
-                                child: _buildClickableInfo(
-                                    context, snapshot.data[i]),
+                      child: Container(
+                        child: Row(
+                          children: <Widget>[
+                            Expanded(
+                              child: Stack(
+                                children: [
+                                  _buildImg(snapshot.data[i]),
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      color: Colors.black38,
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 8),
+                                    child: IntrinsicHeight(
+                                      child: Row(
+                                        children: [
+                                          Expanded(
+                                            child: _buildClickableInfo(
+                                                context, snapshot.data[i]),
+                                          ),
+                                          CircleButton(
+                                            child: Icon(
+                                              Icons.delete,
+                                              color: Colors.redAccent,
+                                            ),
+                                            onTap: () => _onTrashTap(
+                                                snapshot.data[i][pairsIdKey]),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
-                              CircleButton(
-                                child: Icon(
-                                  Icons.delete,
-                                  color: Colors.redAccent,
-                                ),
-                                onTap: () =>
-                                    _onTrashTap(snapshot.data[i][pairsIdKey]),
-                              ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                       ),
                     ),
@@ -185,29 +207,57 @@ class _ManageSetPageState extends State<ManageSetPage> {
         arguments: map,
       ),
       child: Container(
-        color: Colors.transparent, // to expand clickable area
+        color: Colors.transparent,
         child: Row(
           children: <Widget>[
-            Icon(Icons.image, color: Colors.grey),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(4, 8, 4, 8),
-              child: Container(
-                width: 2,
-                decoration: BoxDecoration(
-                  color: Colors.grey,
-                  borderRadius: BorderRadius.circular(8),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text(
+                  map[pairsTitleKey],
+                  style: TextStyle(
+                    fontWeight: FontWeight.w500,
+                    color: Colors.white,
+                  ),
                 ),
-              ),
-            ),
-            Expanded(
-              child: Text(
-                map[pairsTitleKey],
-                style: TextStyle(fontWeight: FontWeight.w500),
-              ),
+              ],
             ),
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildImg(Map map) {
+    final _img = File(map[pairsImgPathKey]);
+
+    return FutureBuilder(
+      future: _img.exists(),
+      builder: (context, snap) {
+        if (snap.connectionState == ConnectionState.done) {
+          if (snap.data == true) {
+            return Container(
+              child: Row(
+                children: <Widget>[
+                  Expanded(
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(8),
+                      child: Image.file(
+                        _img,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          } else {
+            return Text('IMAGE NOT FOUND', style: blackTextStyle);
+          }
+        }
+
+        return CircularProgressIndicator();
+      },
     );
   }
 
