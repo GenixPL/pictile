@@ -8,6 +8,10 @@ class Validator {
       return 'Max 50 characters';
     }
 
+    if (value.contains('"')) {
+      return 'You can not use " sign (use \' instead)';
+    }
+
     return null;
   }
 
@@ -20,6 +24,10 @@ class Validator {
       return 'Max 50 characters';
     }
 
+    if (value.contains('"')) {
+      return 'You can not use " sign (use \' instead)';
+    }
+
     return null;
   }
 
@@ -30,6 +38,10 @@ class Validator {
 
     if (value.length > 1000) {
       return 'Max 1000 characters';
+    }
+
+    if (value.contains('"')) {
+      return 'You can not use " sign (use \' instead)';
     }
 
     return null;

@@ -74,7 +74,7 @@ class _ManageSetPageState extends State<ManageSetPage> {
 
   Widget _buildPairs() {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(8, 16, 8, 8),
+      padding: const EdgeInsets.fromLTRB(8, 16, 8, 0),
       child: Stack(
         children: [
           Column(

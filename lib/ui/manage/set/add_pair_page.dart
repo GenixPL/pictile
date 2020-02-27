@@ -112,7 +112,7 @@ class _AddPairPageState extends State<AddPairPage> {
                 decoration: InputDecoration(
                   contentPadding: EdgeInsets.fromLTRB(8, 4, 8, 4),
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(32),
+                    borderRadius: BorderRadius.circular(8),
                   ),
                 ),
                 expands: true,

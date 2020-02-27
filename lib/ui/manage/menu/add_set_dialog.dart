@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:keyboard_avoider/keyboard_avoider.dart';
 import 'package:pictile/main.dart';
 import 'package:pictile/themes/text_styles.dart';
 
@@ -12,51 +13,54 @@ class AddSetDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(left: 16, right: 16),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Container(
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(8),
-            ),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(8),
-              child: Material(
-                child: Column(
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.all(16),
-                      child: Text('CREATE NEW SET', style: blackTextStyle),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 8, right: 8),
-                      child: Form(
-                        key: _formKey,
-                        child: TextFormField(
-                          controller: _nameController,
-                          decoration: InputDecoration(
-                            contentPadding: EdgeInsets.fromLTRB(8, 4, 8, 4),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(32),
+
+    return KeyboardAvoider(
+      child: Padding(
+        padding: EdgeInsets.only(left: 16, right: 16),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(24),
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(24),
+                child: Material(
+                  child: Column(
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.all(16),
+                        child: Text('CREATE NEW SET', style: blackTextStyle),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 8, right: 8),
+                        child: Form(
+                          key: _formKey,
+                          child: TextFormField(
+                            controller: _nameController,
+                            decoration: InputDecoration(
+                              contentPadding: EdgeInsets.fromLTRB(8, 4, 8, 4),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(32),
+                              ),
+                              hintText: 'Set name...',
+                              labelText: 'Set name',
                             ),
-                            hintText: 'Set name...',
-                            labelText: 'Set name',
+                            validator: Validator.validateSetName,
                           ),
-                          validator: Validator.validateSetName,
                         ),
                       ),
-                    ),
-                    SizedBox(height: 8),
-                    _buildBottomButtons(context),
-                  ],
+                      SizedBox(height: 8),
+                      _buildBottomButtons(context),
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

@@ -121,7 +121,7 @@ class _EditPairPageState extends State<EditPairPage> {
                 decoration: InputDecoration(
                   contentPadding: EdgeInsets.fromLTRB(8, 4, 8, 4),
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(32),
+                    borderRadius: BorderRadius.circular(8),
                   ),
                 ),
                 expands: true,
@@ -130,7 +130,6 @@ class _EditPairPageState extends State<EditPairPage> {
                 validator: Validator.validatePairDescription,
               ),
             ),
-//        Expanded(child: Container(color: Colors.redAccent,),)
           ],
         ),
       ),

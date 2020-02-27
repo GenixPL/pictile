@@ -21,10 +21,10 @@ class ConfirmDeleteSetDialog extends StatelessWidget {
           Container(
             decoration: BoxDecoration(
               color: Colors.white,
-              borderRadius: BorderRadius.circular(8),
+              borderRadius: BorderRadius.circular(24),
             ),
             child: ClipRRect(
-              borderRadius: BorderRadius.circular(8),
+              borderRadius: BorderRadius.circular(24),
               child: Material(
                 child: Column(
                   children: <Widget>[
