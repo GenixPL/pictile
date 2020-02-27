@@ -64,15 +64,17 @@ class _AddPairPageState extends State<AddPairPage> {
               child: Image.file(_img),
               alignment: Alignment.center,
             ),
-          GestureDetector(
-            onTap: _onImgTap,
-            child: Container(
-              decoration: BoxDecoration(
-                color: Colors.black54,
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: Center(
-                child: Text('TAP TO CHANGE', style: smallWhiteTextStyle),
+          Builder(
+            builder: (context) => GestureDetector(
+              onTap: () => _onImgTap(context),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.black54,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Center(
+                  child: Text('TAP TO CHANGE', style: smallWhiteTextStyle),
+                ),
               ),
             ),
           ),
@@ -140,17 +142,19 @@ class _AddPairPageState extends State<AddPairPage> {
         ),
         Padding(
           padding: const EdgeInsets.all(8.0),
-          child: SizedBox(
-            height: 32,
-            child: RaisedButton(
-              padding: EdgeInsets.all(0),
-              color: Colors.black,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8),
+          child: Builder(
+            builder: (context) => SizedBox(
+              height: 32,
+              child: RaisedButton(
+                padding: EdgeInsets.all(0),
+                color: Colors.black,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                splashColor: Colors.white,
+                child: Text('CREATE', style: smallWhiteTextStyle),
+                onPressed: () => _onCreateTap(context),
               ),
-              splashColor: Colors.white,
-              child: Text('CREATE', style: smallWhiteTextStyle),
-              onPressed: () => _onCreateTap(context),
             ),
           ),
         ),
@@ -158,7 +162,7 @@ class _AddPairPageState extends State<AddPairPage> {
     );
   }
 
-  _onImgTap() async {
+  _onImgTap(BuildContext context) async {
     await PermissionHandler().requestPermissions(
       [PermissionGroup.photos],
     );
@@ -168,7 +172,13 @@ class _AddPairPageState extends State<AddPairPage> {
       img = await ImagePicker.pickImage(source: ImageSource.gallery);
     } catch (e) {
       print(e);
-      // TODO show info
+      Scaffold.of(context).showSnackBar(
+        SnackBar(
+          content:
+              Text('IMAGE COULD NOT BE LOADED', style: smallWhiteTextStyle),
+          behavior: SnackBarBehavior.floating,
+        ),
+      );
       return;
     }
 
@@ -179,7 +189,14 @@ class _AddPairPageState extends State<AddPairPage> {
 
   _onCreateTap(BuildContext context) async {
     if (!_formKey.currentState.validate() || _img == null) {
-      // TODO show info
+      if (_img == null) {
+        Scaffold.of(context).showSnackBar(
+          SnackBar(
+            content: Text('IMAGE CAN NOT BE EMPTY', style: smallWhiteTextStyle),
+            behavior: SnackBarBehavior.floating,
+          ),
+        );
+      }
       return;
     }
 

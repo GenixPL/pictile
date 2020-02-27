@@ -113,7 +113,6 @@ class _ManageSetPageState extends State<ManageSetPage> {
 
   Widget _buildPlusButton() {
     return CircleButton(
-      //TODO make it floating over pair tiles
       onTap: () => _onPlusTap(context),
       child: Icon(Icons.add, color: Colors.white),
       backgroundColor: Colors.black,

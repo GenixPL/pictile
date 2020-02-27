@@ -73,15 +73,17 @@ class _EditPairPageState extends State<EditPairPage> {
               child: Image.file(_img),
               alignment: Alignment.center,
             ),
-          GestureDetector(
-            onTap: _onImgTap,
-            child: Container(
-              decoration: BoxDecoration(
-                color: Colors.black54,
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: Center(
-                child: Text('TAP TO CHANGE', style: smallWhiteTextStyle),
+          Builder(
+            builder: (context) => GestureDetector(
+              onTap: () => _onImgTap(context),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.black54,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Center(
+                  child: Text('TAP TO CHANGE', style: smallWhiteTextStyle),
+                ),
               ),
             ),
           ),
@@ -149,17 +151,19 @@ class _EditPairPageState extends State<EditPairPage> {
         ),
         Padding(
           padding: const EdgeInsets.all(8.0),
-          child: SizedBox(
-            height: 32,
-            child: RaisedButton(
-              padding: EdgeInsets.all(0),
-              color: Colors.black,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8),
+          child: Builder(
+            builder: (context) => SizedBox(
+              height: 32,
+              child: RaisedButton(
+                padding: EdgeInsets.all(0),
+                color: Colors.black,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                splashColor: Colors.white,
+                child: Text('SAVE', style: smallWhiteTextStyle),
+                onPressed: () => _onSaveTap(context),
               ),
-              splashColor: Colors.white,
-              child: Text('SAVE', style: smallWhiteTextStyle),
-              onPressed: () => _onSaveTap(context),
             ),
           ),
         ),
@@ -169,8 +173,7 @@ class _EditPairPageState extends State<EditPairPage> {
 
   // FUNCTIONS
 
-
-  _onImgTap() async {
+  _onImgTap(BuildContext context) async {
     await PermissionHandler().requestPermissions(
       [PermissionGroup.photos],
     );
@@ -180,7 +183,13 @@ class _EditPairPageState extends State<EditPairPage> {
       img = await ImagePicker.pickImage(source: ImageSource.gallery);
     } catch (e) {
       print(e);
-      // TODO show info
+      Scaffold.of(context).showSnackBar(
+        SnackBar(
+          content:
+              Text('IMAGE COULD NOT BE LOADED', style: smallWhiteTextStyle),
+          behavior: SnackBarBehavior.floating,
+        ),
+      );
       return;
     }
 
@@ -191,7 +200,14 @@ class _EditPairPageState extends State<EditPairPage> {
 
   _onSaveTap(BuildContext context) async {
     if (!_formKey.currentState.validate() || _img == null) {
-      // TODO show info
+      if (_img == null) {
+        Scaffold.of(context).showSnackBar(
+          SnackBar(
+            content: Text('IMAGE CAN NOT BE EMPTY', style: smallWhiteTextStyle),
+            behavior: SnackBarBehavior.floating,
+          ),
+        );
+      }
       return;
     }
 
