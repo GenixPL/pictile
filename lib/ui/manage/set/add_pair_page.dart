@@ -8,6 +8,8 @@ import 'package:pictile/services/db_helper.dart';
 import 'package:pictile/themes/text_styles.dart';
 
 import 'package:pictile/ui/common/basic_page.dart';
+import 'package:pictile/ui/common/buttons/my_flat_button.dart';
+import 'package:pictile/ui/common/buttons/my_raised_button.dart';
 import 'package:pictile/utils/validator.dart';
 import 'package:provider/provider.dart';
 
@@ -95,7 +97,9 @@ class _AddPairPageState extends State<AddPairPage> {
               controller: _titleController,
               decoration: InputDecoration(
                 contentPadding: EdgeInsets.fromLTRB(8, 0, 8, 0),
-                border: OutlineInputBorder(),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(32),
+                ),
               ),
               maxLines: 1,
               validator: Validator.validatePairTitle,
@@ -107,11 +111,13 @@ class _AddPairPageState extends State<AddPairPage> {
                 controller: _descriptionController,
                 decoration: InputDecoration(
                   contentPadding: EdgeInsets.fromLTRB(8, 4, 8, 4),
-                  border: OutlineInputBorder(),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(32),
+                  ),
                 ),
                 expands: true,
                 maxLines: null,
-                maxLength: 500,
+                maxLength: 1000,
                 validator: Validator.validatePairDescription,
               ),
             ),
@@ -126,36 +132,14 @@ class _AddPairPageState extends State<AddPairPage> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: SizedBox(
-            height: 32,
-            child: FlatButton(
-              child: Text('CANCEL', style: smallBlackTextStyle),
-              onPressed: () => Navigator.pop(context),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8),
-              ),
-              padding: EdgeInsets.all(0),
-            ),
-          ),
+        MyFlatButton(
+          text: 'CANCEL',
+          onTap: () => Navigator.pop(context),
         ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Builder(
-            builder: (context) => SizedBox(
-              height: 32,
-              child: RaisedButton(
-                padding: EdgeInsets.all(0),
-                color: Colors.black,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                splashColor: Colors.white,
-                child: Text('CREATE', style: smallWhiteTextStyle),
-                onPressed: () => _onCreateTap(context),
-              ),
-            ),
+        Builder(
+          builder: (context) => MyRaisedButton(
+            text: 'CREATE',
+            onTap: () => _onCreateTap(context),
           ),
         ),
       ],

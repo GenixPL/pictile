@@ -60,7 +60,9 @@ class _ManageSetPageState extends State<ManageSetPage> {
               controller: _nameController,
               decoration: InputDecoration(
                 contentPadding: EdgeInsets.fromLTRB(8, 4, 8, 4),
-                border: OutlineInputBorder(),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(32),
+                ),
               ),
               validator: Validator.validateSetName,
             ),
@@ -139,7 +141,7 @@ class _ManageSetPageState extends State<ManageSetPage> {
                       height: 52,
                       decoration: BoxDecoration(
                         color: Colors.white,
-                        borderRadius: BorderRadius.circular(8),
+                        borderRadius: BorderRadius.circular(32),
                         boxShadow: [
                           BoxShadow(color: Colors.grey[800], blurRadius: 2),
                         ],
@@ -154,7 +156,7 @@ class _ManageSetPageState extends State<ManageSetPage> {
                                   Container(
                                     decoration: BoxDecoration(
                                       color: Colors.black38,
-                                      borderRadius: BorderRadius.circular(8),
+                                      borderRadius: BorderRadius.circular(32),
                                     ),
                                   ),
                                   Padding(
@@ -212,17 +214,22 @@ class _ManageSetPageState extends State<ManageSetPage> {
         color: Colors.transparent,
         child: Row(
           children: <Widget>[
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Text(
-                  map[pairsTitleKey],
-                  style: TextStyle(
-                    fontWeight: FontWeight.w500,
-                    color: Colors.white,
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    map[pairsTitleKey],
+                    style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      color: Colors.white,
+                    ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ],
         ),
@@ -243,7 +250,7 @@ class _ManageSetPageState extends State<ManageSetPage> {
                 children: <Widget>[
                   Expanded(
                     child: ClipRRect(
-                      borderRadius: BorderRadius.circular(8),
+                      borderRadius: BorderRadius.circular(32),
                       child: Image.file(
                         _img,
                         fit: BoxFit.cover,

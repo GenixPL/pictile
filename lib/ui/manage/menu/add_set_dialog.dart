@@ -39,7 +39,9 @@ class AddSetDialog extends StatelessWidget {
                           controller: _nameController,
                           decoration: InputDecoration(
                             contentPadding: EdgeInsets.fromLTRB(8, 4, 8, 4),
-                            border: OutlineInputBorder(),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(32),
+                            ),
                             hintText: 'Set name...',
                             labelText: 'Set name',
                           ),

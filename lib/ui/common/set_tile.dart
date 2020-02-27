@@ -18,7 +18,7 @@ class SetTile extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.circular(32),
           boxShadow: [
             BoxShadow(color: Colors.black, blurRadius: 2),
           ],
@@ -62,6 +62,8 @@ class SetTile extends StatelessWidget {
               child: Text(
                 setMap[setsNameKey],
                 style: TextStyle(fontWeight: FontWeight.w500),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
               ),
             ),
           ],

@@ -24,7 +24,7 @@ class MyFlatButton extends StatelessWidget {
             style: smallBlackTextStyle,
           ),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8),
+            borderRadius: BorderRadius.circular(32),
           ),
           padding: EdgeInsets.all(0),
         ),

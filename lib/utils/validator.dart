@@ -28,8 +28,8 @@ class Validator {
       return 'Please enter some text';
     }
 
-    if (value.length > 500) {
-      return 'Max 500 characters';
+    if (value.length > 1000) {
+      return 'Max 1000 characters';
     }
 
     return null;

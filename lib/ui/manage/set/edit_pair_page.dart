@@ -106,7 +106,9 @@ class _EditPairPageState extends State<EditPairPage> {
               controller: _titleController,
               decoration: InputDecoration(
                 contentPadding: EdgeInsets.fromLTRB(8, 0, 8, 0),
-                border: OutlineInputBorder(),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(32),
+                ),
               ),
               maxLines: 1,
               validator: Validator.validatePairTitle,
@@ -118,11 +120,13 @@ class _EditPairPageState extends State<EditPairPage> {
                 controller: _descriptionController,
                 decoration: InputDecoration(
                   contentPadding: EdgeInsets.fromLTRB(8, 4, 8, 4),
-                  border: OutlineInputBorder(),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(32),
+                  ),
                 ),
                 expands: true,
                 maxLines: null,
-                maxLength: 500,
+                maxLength: 1000,
                 validator: Validator.validatePairDescription,
               ),
             ),
