@@ -73,11 +73,19 @@ class _ManageSetPageState extends State<ManageSetPage> {
   Widget _buildPairs() {
     return Padding(
       padding: const EdgeInsets.fromLTRB(8, 16, 8, 8),
-      child: Column(
-        children: <Widget>[
-          Text('PAIRS', style: smallBlackTextStyle),
-          SizedBox(height: 8),
-          Expanded(child: _buildTiles(context)),
+      child: Stack(
+        children: [
+          Column(
+            children: <Widget>[
+              Text('PAIRS', style: smallBlackTextStyle),
+              SizedBox(height: 8),
+              Expanded(child: _buildTiles(context)),
+            ],
+          ),
+          Align(
+            alignment: Alignment.bottomRight,
+            child: _buildPlusButton(),
+          ),
         ],
       ),
     );
@@ -86,21 +94,6 @@ class _ManageSetPageState extends State<ManageSetPage> {
   Widget _buildBottomButtons(BuildContext context) {
     return Column(
       children: <Widget>[
-        Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
-              child: CircleButton(
-                //TODO make it floating over pair tiles
-                onTap: () => _onPlusTap(context),
-                child: Icon(Icons.add, color: Colors.white),
-                backgroundColor: Colors.black,
-                paddingSize: 8,
-              ),
-            ),
-          ],
-        ),
         Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: <Widget>[
@@ -115,6 +108,16 @@ class _ManageSetPageState extends State<ManageSetPage> {
           ],
         ),
       ],
+    );
+  }
+
+  Widget _buildPlusButton() {
+    return CircleButton(
+      //TODO make it floating over pair tiles
+      onTap: () => _onPlusTap(context),
+      child: Icon(Icons.add, color: Colors.white),
+      backgroundColor: Colors.black,
+      paddingSize: 8,
     );
   }
 
@@ -139,7 +142,7 @@ class _ManageSetPageState extends State<ManageSetPage> {
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(8),
                         boxShadow: [
-                          BoxShadow(color: Colors.black, blurRadius: 2),
+                          BoxShadow(color: Colors.grey[800], blurRadius: 2),
                         ],
                       ),
                       child: Container(

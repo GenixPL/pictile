@@ -75,7 +75,12 @@ class ShowPage extends StatelessWidget {
     final pairMaps = await db.getPairsForSet(map[setsIdKey]);
 
     if (pairMaps.length == 0) {
-      // TODO show info
+      Scaffold.of(context).showSnackBar(
+        SnackBar(
+          content: Text('THIS SET IS EMPTY', style: smallWhiteTextStyle),
+          behavior: SnackBarBehavior.floating,
+        ),
+      );
       return;
     }
 
