@@ -1,7 +1,7 @@
 name: pictile
 description: Fur Julia Niedzialek
 
-version: 1.0.0+2
+version: 1.0.0+3
 
 environment:
   sdk: ">=2.5.2 <3.0.0"
