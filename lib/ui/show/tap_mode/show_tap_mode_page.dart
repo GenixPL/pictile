@@ -5,6 +5,7 @@ import 'package:pictile/services/db.dart';
 import 'package:pictile/themes/text_styles.dart';
 
 import 'package:pictile/ui/common/basic_page.dart';
+import 'package:pictile/ui/common/buttons/my_raised_button.dart';
 
 class ShowTapModePage extends StatefulWidget {
   final List<Map> maps;
@@ -129,37 +130,13 @@ class _ShowTapModePageState extends State<ShowTapModePage> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: SizedBox(
-            height: 32,
-            child: RaisedButton(
-              padding: EdgeInsets.all(0),
-              color: Colors.black,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8),
-              ),
-              splashColor: Colors.white,
-              child: Text('PREVIOUS', style: smallWhiteTextStyle),
-              onPressed: _getPrevFunction(),
-            ),
-          ),
+        MyRaisedButton(
+          text: 'PREV',
+          onTap: _getPrevFunction(),
         ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: SizedBox(
-            height: 32,
-            child: RaisedButton(
-              padding: EdgeInsets.all(0),
-              color: Colors.black,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8),
-              ),
-              splashColor: Colors.white,
-              child: Text('NEXT', style: smallWhiteTextStyle),
-              onPressed: _getNextFunction(),
-            ),
-          ),
+        MyRaisedButton(
+          text: 'NEXT',
+          onTap: _getNextFunction(),
         ),
       ],
     );

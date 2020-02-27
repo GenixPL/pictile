@@ -13,8 +13,7 @@ class MyRaisedButton extends StatelessWidget {
     @required this.onTap,
     this.backgroundColor = Colors.black,
     this.textStyle,
-  })  : assert(text != null),
-        assert(onTap != null);
+  })  : assert(text != null);
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +21,8 @@ class MyRaisedButton extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: SizedBox(
         height: 32,
-        child: RaisedButton(
+        child:
+        RaisedButton(
           onPressed: onTap,
           child: Text(
             text,
@@ -31,7 +31,7 @@ class MyRaisedButton extends StatelessWidget {
           padding: EdgeInsets.all(0),
           color: backgroundColor,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8),
+            borderRadius: BorderRadius.circular(32),
           ),
           splashColor: Colors.white,
         ),
