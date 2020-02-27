@@ -1,3 +1,7 @@
+import 'dart:io';
+
+import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:pictile/utils/logger.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -28,7 +32,7 @@ class Db {
         // When creating the db, create the tables
         await _createSetsTable(db);
         await _createPairsTable(db);
-        Log.d(_TAG, 'table were created');
+        Log.d(_TAG, 'tables were created (${db.path})');
       },
     );
 
@@ -172,7 +176,23 @@ class Db {
 
   Future<String> _getPath() async {
     // Get a location using getDatabasesPath
-    var databasesPath = await getDatabasesPath();
+    var databasesPath;
+    if (Platform.isAndroid) {
+      await PermissionHandler().requestPermissions([PermissionGroup.storage]);
+      final status = await PermissionHandler()
+          .checkPermissionStatus(PermissionGroup.storage);
+      if (status == PermissionStatus.granted) {
+        databasesPath = (await getExternalStorageDirectory())
+            .path
+            .replaceFirst('Android/data/com.genix.pictile/files', 'Pictile');
+      } else {
+        databasesPath = await getDatabasesPath();
+      }
+    } else {
+      databasesPath = await getLibraryDirectory();
+    }
+
+    print('DB PATH: $databasesPath');
 
     return '$databasesPath/$_dbPath';
   }
